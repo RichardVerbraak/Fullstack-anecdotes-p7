@@ -6,7 +6,7 @@ const Menu = () => {
 	}
 	return (
 		<div>
-			<Link to='/anecdotes' style={padding}>
+			<Link to='/' style={padding}>
 				anecdotes
 			</Link>
 			<Link to='/create' style={padding}>

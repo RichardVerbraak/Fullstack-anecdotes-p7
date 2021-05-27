@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router'
 
 import About from './About'
 import Anecdotes from './Anecdotes'
 import CreateNew from './CreateNew'
-import Footer from './Footer'
 import Menu from './Menu'
 
-const Home = () => {
+const Home = ({ location }) => {
+	const [page, setPage] = useState('/')
+	const [notification, setNotification] = useState('')
+
 	const [anecdotes, setAnecdotes] = useState([
 		{
 			content: 'If it hurts, do it more often',
@@ -24,7 +27,9 @@ const Home = () => {
 		},
 	])
 
-	const [notification, setNotification] = useState('')
+	useEffect(() => {
+		setPage(location.pathname)
+	}, [location.pathname])
 
 	const addNew = (anecdote) => {
 		anecdote.id = (Math.random() * 10000).toFixed(0)
@@ -48,9 +53,10 @@ const Home = () => {
 		<div>
 			<h1>Software anecdotes</h1>
 			<Menu />
-			<Anecdotes anecdotes={anecdotes} />
-			<About />
-			<CreateNew addNew={addNew} />
+
+			{page === '/' && <Anecdotes anecdotes={anecdotes} />}
+			{page === '/about' && <About />}
+			{page === '/create' && <CreateNew addNew={addNew} />}
 		</div>
 	)
 }
