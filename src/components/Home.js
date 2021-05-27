@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import About from './About'
 import Anecdotes from './Anecdotes'
@@ -52,7 +51,6 @@ const Home = () => {
 			<Anecdotes anecdotes={anecdotes} />
 			<About />
 			<CreateNew addNew={addNew} />
-			<Footer />
 		</div>
 	)
 }
