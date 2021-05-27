@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router'
 
 import About from './About'
 import Anecdotes from './Anecdotes'
+import Anecdote from './Anecdote'
 import CreateNew from './CreateNew'
 import Menu from './Menu'
 
-const Home = ({ location }) => {
-	const [page, setPage] = useState('/')
+const Home = ({ location, match }) => {
+	const page = location.pathname || '/'
+	const id = match.params.id
+
 	const [notification, setNotification] = useState('')
+	const [anecdote, setAnecdote] = useState({})
 
 	const [anecdotes, setAnecdotes] = useState([
 		{
@@ -27,19 +30,20 @@ const Home = ({ location }) => {
 		},
 	])
 
-	useEffect(() => {
-		setPage(location.pathname)
-	}, [location.pathname])
-
 	const addNew = (anecdote) => {
 		anecdote.id = (Math.random() * 10000).toFixed(0)
 		setAnecdotes(anecdotes.concat(anecdote))
 	}
 
-	const anecdoteById = (id) => anecdotes.find((a) => a.id === id)
+	useEffect(() => {
+		if (id) {
+			const foundAnecdote = anecdotes.find((anecdote) => anecdote.id === id)
+			setAnecdote(foundAnecdote)
+		}
+	}, [id, anecdotes])
 
 	const vote = (id) => {
-		const anecdote = anecdoteById(id)
+		const anecdote = anecdotes.find((anecdote) => anecdote.id === id)
 
 		const voted = {
 			...anecdote,
@@ -54,7 +58,12 @@ const Home = ({ location }) => {
 			<h1>Software anecdotes</h1>
 			<Menu />
 
-			{page === '/' && <Anecdotes anecdotes={anecdotes} />}
+			{id ? (
+				<Anecdote anecdote={anecdote} />
+			) : (
+				<Anecdotes anecdotes={anecdotes} />
+			)}
+
 			{page === '/about' && <About />}
 			{page === '/create' && <CreateNew addNew={addNew} />}
 		</div>
