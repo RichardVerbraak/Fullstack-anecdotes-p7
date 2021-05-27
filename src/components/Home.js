@@ -31,8 +31,13 @@ const Home = ({ location, match }) => {
 	])
 
 	const addNew = (anecdote) => {
-		anecdote.id = (Math.random() * 10000).toFixed(0)
-		setAnecdotes(anecdotes.concat(anecdote))
+		setAnecdotes([...anecdotes, anecdote])
+		setNotification(
+			`a new anecdote ${anecdote.content} by ${anecdote.author} created`
+		)
+		setTimeout(() => {
+			setNotification('')
+		}, 5000)
 	}
 
 	useEffect(() => {
@@ -58,6 +63,7 @@ const Home = ({ location, match }) => {
 			<h1>Software anecdotes</h1>
 			<Menu />
 
+			{notification && <p>{notification}</p>}
 			{id ? (
 				<Anecdote anecdote={anecdote} />
 			) : (
