@@ -7,6 +7,7 @@ import CreateNew from './CreateNew'
 import Menu from './Menu'
 
 const Home = ({ location, match }) => {
+	// Used for individual anecdote
 	const page = location.pathname || '/'
 	const id = match.params.id
 
@@ -64,6 +65,7 @@ const Home = ({ location, match }) => {
 			<Menu />
 
 			{notification && <p>{notification}</p>}
+
 			{id ? (
 				<Anecdote anecdote={anecdote} />
 			) : (
