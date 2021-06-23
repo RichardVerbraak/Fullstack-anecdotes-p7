@@ -12,15 +12,15 @@ const useField = (type) => {
 	}
 
 	const reset = () => {
-		console.log('click')
-		console.log(value)
 		setValue('')
 	}
 
+	// This object will only be destructured for the inputFields
+	// This is done so reset isn't given as a prop to the <input/>
+	const inputFields = { type, value, onChange }
+
 	return {
-		type,
-		value,
-		onChange,
+		inputFields,
 		reset,
 	}
 }
