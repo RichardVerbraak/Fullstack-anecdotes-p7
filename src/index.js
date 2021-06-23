@@ -11,10 +11,17 @@ const useField = (type) => {
 		setValue(e.target.value)
 	}
 
+	const reset = () => {
+		console.log('click')
+		console.log(value)
+		setValue('')
+	}
+
 	return {
 		type,
 		value,
 		onChange,
+		reset,
 	}
 }
 
